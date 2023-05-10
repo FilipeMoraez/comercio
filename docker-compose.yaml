@@ -1,0 +1,69 @@
+version: '2'
+services:
+  mysqldb:
+    container_name: mysqldb
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: comerciodb
+    networks:
+      spring-cloud-network:
+
+  eureka:
+    container_name: eureka
+    build:
+      context: eureka
+      dockerfile: Dockerfile
+    image: eureka:latest
+    depends_on:
+      - mysqldb
+    ports:
+      - 8761:8761
+    networks:
+      spring-cloud-network:
+    restart: on-failure
+  gateway:
+    container_name: gateway
+    build:
+      context: gateway
+      dockerfile: Dockerfile
+    image: gateway:latest
+    depends_on:
+      - mysqldb
+      - eureka
+    ports:
+      - 8080:8080
+    networks:
+      spring-cloud-network:
+    restart: on-failure
+  login:
+    container_name: login
+    build:
+      context: login
+      dockerfile: Dockerfile
+    image: login:latest
+    depends_on:
+      - mysqldb
+      - eureka
+    ports:
+      - 8081:8081
+    networks:
+      spring-cloud-network:
+    restart: on-failure
+  saldo:
+    container_name: saldo
+    build:
+      context: saldo
+      dockerfile: Dockerfile
+    image: saldo:latest
+    depends_on:
+      - mysqldb
+      - login
+    ports:
+      - 8082:8082
+    networks:
+      spring-cloud-network:
+    restart: on-failure
+networks:
+  spring-cloud-network:
+    driver: bridge

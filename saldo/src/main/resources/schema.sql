@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS saldo_comercio;
+create table saldo_comercio (id int primary key,id_acesskey varchar(100),data_transacao date,descricao varchar(200),id_transacao varchar(100),saldo numeric,tipo_transacao varchar(200),valor numeric)

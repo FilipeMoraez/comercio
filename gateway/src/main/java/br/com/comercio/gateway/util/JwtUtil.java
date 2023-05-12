@@ -2,14 +2,19 @@ package br.com.comercio.gateway.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.Claim;
-import com.auth0.jwt.interfaces.DecodedJWT;
 
+import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
+
+import javax.crypto.spec.SecretKeySpec;
 
 
 @Component
@@ -19,14 +24,20 @@ public class JwtUtil {
         private static final String TOKEN_PREFIX = "Bearer ";
         public static final long EXPIRATION_TIME = 900_000; // 15 mins
 
-        public Map<String, Claim> getAllClaimsFromToken(String token) {
+
+
+        public Jws<Claims> getAllClaimsFromToken(String token) {
+
                 try{
+                    Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(secret),
+                            SignatureAlgorithm.HS256.getJcaName());
+
                     token = token.replace(TOKEN_PREFIX, "");
-                    Map<String, Claim> claims = new HashMap<String, Claim>();
-                    claims = JWT.require(Algorithm.HMAC512(secret))
+
+                    Jws<Claims> claims = Jwts.parserBuilder()
+                            .setSigningKey(hmacKey)
                             .build()
-                            .verify(token)
-                            .getClaims();
+                            .parseClaimsJws(token);
                     return claims;                   
                 } catch (Exception e) {
                         System.out.println("Token Invalido(01): " + e.getMessage());
@@ -48,9 +59,9 @@ public class JwtUtil {
         }
 
         public String getUsuarioKey(String token) {
-            Map<String, Claim> claims = this.getAllClaimsFromToken(token);
+            Jws<Claims> claims = this.getAllClaimsFromToken(token);
             try {
-                return claims.get("code").toString();
+                return claims.getBody().get("code").toString();
             } catch (Exception e) {
                 System.out.println(">>>>> Falha ao processar Token JWT!!! Token inválido. Usuario nao encontrado: " + e.getMessage());
                 return null;

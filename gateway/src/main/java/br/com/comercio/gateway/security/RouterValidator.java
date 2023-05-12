@@ -10,8 +10,8 @@ public class RouterValidator {
 
         public static final List<String> openApiEndpoints = List.of(
                 "/saldo/api/balance",
-                "/saldo/api/debito",
-                "/saldo/api/credito"
+                "/saldo/api/debit",
+                "/saldo/api/credit"
         );
 
         public static final List<String> openURLS = List.of(
@@ -23,9 +23,7 @@ public class RouterValidator {
 
         public Predicate<ServerHttpRequest> isOpenURL = request -> openURLS
                 .stream()
-                .noneMatch(uri ->{
-                                System.out.print(request.getURI().getPath());
-                        return request.getURI().getPath().contains(uri);});
+                .noneMatch(uri -> request.getURI().getPath().contains(uri));
 
         public Predicate<ServerHttpRequest> isSecured = request -> openApiEndpoints
                 .stream()

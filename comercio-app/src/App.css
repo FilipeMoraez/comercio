@@ -1,0 +1,144 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.saldo{
+  margin-top:-20px;
+  background-color:rgb(109, 197, 251);
+}
+.saldo h3{
+  height:25px;
+  text-align: right;
+  padding-right:30px;
+}
+
+.background{
+  color:white;
+  position:absolute;
+  background-color:#313c54d6;
+  width:100%;
+  height: 100%;
+}
+.background .form{
+  width:400px;
+  margin:0 auto;
+  margin-top:120px; 
+
+}
+.lawyer{
+  background-color:red;
+  width: 100%;
+  height: 100%;
+}
+
+.background .form div{
+  margin:10px;
+}
+table.mov , .mov th, .mov td{
+  margin:0 auto;
+  padding:10px;
+  border-bottom: 1px solid;
+}
+
+table.mov th, table.mov td{
+  padding-right:40px;
+  padding-left:40px;
+}
+.movimento input[type=text], .movimento input[type=number]{
+  padding: 1px 100px;
+    margin-bottom: 50px;
+    margin-top: 10px;
+    text-align: center;
+}
+.movimento label{
+  font-size: 21px;
+}
+.movimento h1{
+  padding-bottom:30px;
+}
+.movimento input[type=submit]{
+  background-color: #19ff19;
+  border: none;
+  width: 300px;
+  height: 40px;
+  font-size: 20px;
+}
+.movimento input[type=submit].dbt{
+  background-color: #1966ff;
+}
+.movimentacoes{
+   max-height: 600px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.layer{
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  background-color: #0000007d;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: white;
+}
+.block{
+  background-color: white;
+    width: 500px;
+    margin: 0 auto;
+    color: black;
+    border-radius: 17px;
+    padding: 10px;
+    margin-top: 200px;
+}
+.movimentacoes .header{
+  display: inline-flex;
+}
+.movimentacoes h2{
+  width:200px;
+  border-radius: 12px;
+  background-color: white;
+  
+  padding: 2px;
+  cursor:pointer;
+}
+
+.movimentacoes h2:hover{
+  background-color: #66aae5;
+}

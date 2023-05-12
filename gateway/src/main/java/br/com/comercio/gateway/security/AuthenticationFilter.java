@@ -3,6 +3,9 @@ package br.com.comercio.gateway.security;
 import br.com.comercio.gateway.util.JwtUtil;
 import com.auth0.jwt.interfaces.Claim;
 import java.util.Map;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
@@ -39,9 +42,9 @@ public class AuthenticationFilter implements WebFilter {
 
         private void populateRequestWithHeaders(ServerWebExchange exchange, String token) {
             try{
-                Map<String, Claim> claims = jwtUtil.getAllClaimsFromToken(token);
+                Jws<Claims> claims = jwtUtil.getAllClaimsFromToken(token);
                 exchange.getRequest().mutate()
-                        .header("login", String.valueOf(claims.get("code")))
+                        .header("login", String.valueOf(claims.getBody().get("code")))
                         .build();
             }catch(Exception e) {
                 System.out.println(">>>>> Erro: populateRequestWithHeaders: " + e.getMessage());

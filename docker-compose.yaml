@@ -8,7 +8,14 @@ services:
       MYSQL_DATABASE: comerciodb
     networks:
       spring-cloud-network:
-
+  mysqldatabase:
+    container_name: mysqldatabase
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: comerciosaldodb
+    networks:
+      spring-cloud-network:
   eureka:
     container_name: eureka
     build:
@@ -57,10 +64,22 @@ services:
       dockerfile: Dockerfile
     image: saldo:latest
     depends_on:
-      - mysqldb
-      - login
+      - mysqldatabase
     ports:
       - 8082:8082
+    networks:
+      spring-cloud-network:
+    restart: on-failure
+  comercio-app:
+    container_name: comercio-app
+    build:
+      context: comercio-app
+      dockerfile: Dockerfile
+    image: comercio-app:latest
+    depends_on:
+      - mysqldatabase
+    ports:
+      - 3000:3000
     networks:
       spring-cloud-network:
     restart: on-failure

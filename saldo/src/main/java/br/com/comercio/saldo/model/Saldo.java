@@ -1,5 +1,7 @@
 package br.com.comercio.saldo.model;
 
+import br.com.comercio.saldo.dto.MovimentacaoDTO;
+import br.com.comercio.saldo.exception.InsuficientBalanceException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +10,12 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 @Entity
-@Table(name="SALDO_COMERCIO")
+@Table(name="saldo_comercio", schema = "comerciosaldodb")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -42,6 +47,17 @@ public class Saldo {
 
     @Column(name="id_acesskey")
     private String codigoCliente;
+
+
+    public static Saldo buildSaldo(MovimentacaoDTO movimentacao, String customerId, List<Saldo> transaction) {
+        var saldo = new Saldo();
+        saldo.setValor(movimentacao.getValor());
+        saldo.setDescricao(movimentacao.getDescricao());
+        saldo.setIdTransacao(UUID.randomUUID().toString());
+        saldo.setDataTransacao(new Date());
+        saldo.setCodigoCliente(customerId);
+        return saldo;
+    }
 
 
 }

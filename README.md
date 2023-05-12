@@ -55,6 +55,6 @@ executar os seguintes comandos no terminal na sequencia descrita abaixo:
 
 // 7 - Acompanhe os logs, é normal ocorrer alguma excessão até conectar com eureka certinho, no final tudo deve estar estabilizado e registrado no eureka
  - acesse localhost:3000
- -  usuário e admin e a senha admin
+ -  usuário é admin e a senha também é admin
  - divirta-se! 
 
